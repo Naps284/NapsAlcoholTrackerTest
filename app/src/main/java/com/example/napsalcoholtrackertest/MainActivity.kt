@@ -1,40 +1,27 @@
-package com.example.napsalcoholtrackertest.ui
+package com.example.napsalcoholtrackertest
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.napsalcoholtrackertest.ui.theme.NapsAlcoholTrackerTestTheme
-import com.example.napsalcoholtrackertest.data.*
 
 class MainActivity : ComponentActivity() {
-
-    // Lazy initialization of the ViewModel
-    private val alcoholViewModel: AlcoholViewModel by viewModels {
-        AlcoholViewModelFactory(
-            AlcoholRepository(
-                AlcoholTrackerDatabase.getDatabase(applicationContext).alcoholEntryDao()
-            )
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NapsAlcoholTrackerTestTheme {
-                // Pass the ViewModel to the Composable function
+                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AlcoholTrackerForm(alcoholViewModel)
+                    AlcoholTrackerForm()
                 }
             }
         }
@@ -42,7 +29,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AlcoholTrackerForm(viewModel: AlcoholViewModel) {
+fun AlcoholTrackerForm() {
     // State variables to hold the input
     var beverage by remember { mutableStateOf("") }
     var concentration by remember { mutableStateOf("") }
@@ -92,21 +79,10 @@ fun AlcoholTrackerForm(viewModel: AlcoholViewModel) {
         Button(
             onClick = {
                 if (beverage.isEmpty() || concentration.isEmpty() || volume.isEmpty() || time.isEmpty()) {
-                    // Handle empty fields (e.g., show a Snackbar or Toast)
+                    // Handle empty fields
                 } else {
-                    // Use the ViewModel to save the data
-                    val entry = AlcoholEntry(
-                        name = beverage,
-                        concentration = concentration.toDouble(),
-                        volume = volume.toInt(),
-                        time = time
-                    )
-                    viewModel.insert(entry)
-                    // Clear the fields
-                    beverage = ""
-                    concentration = ""
-                    volume = ""
-                    time = ""
+                    // For now, simply print the data
+                    println("Data Submitted: $beverage, $concentration%, $volume ml at $time")
                 }
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -116,11 +92,10 @@ fun AlcoholTrackerForm(viewModel: AlcoholViewModel) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun AlcoholTrackerFormPreview() {
     NapsAlcoholTrackerTestTheme {
-        AlcoholTrackerForm(viewModel = AlcoholViewModel(AlcoholRepository(AlcoholEntryDaoFake())))
+        AlcoholTrackerForm()
     }
 }
