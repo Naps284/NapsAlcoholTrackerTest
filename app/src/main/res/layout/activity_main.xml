@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Beverage Name -->
+    <EditText
+        android:id="@+id/input_beverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Beverage Name"
+        android:inputType="text" />
+
+    <!-- Alcohol Concentration -->
+    <EditText
+        android:id="@+id/input_concentration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Alcohol Concentration (%)"
+        android:inputType="numberDecimal" />
+
+    <!-- Volume -->
+    <EditText
+        android:id="@+id/input_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Volume (ml)"
+        android:inputType="numberDecimal" />
+
+    <!-- Time of Consumption -->
+    <EditText
+        android:id="@+id/input_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Time of Consumption (HH:MM or t+)"
+        android:inputType="text" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+</LinearLayout>
